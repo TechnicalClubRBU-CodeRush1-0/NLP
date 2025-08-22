@@ -17,6 +17,10 @@ The summarizer follows a pipeline architecture with the following components:
 4. **LSASummarizer** - Core summarization engine using LSA
 5. **Output Generator** - Summary formatting and presentation
 
+## 📊 App Flow
+
+![App Flow](LSA PIPELINE.svg)
+
 ## Component Details
 
 ### 1. PlainTextParser
