@@ -19,7 +19,9 @@ The summarizer follows a pipeline architecture with the following components:
 
 ## 📊 App Flow
 
-![App Flow](LSA PIPELINE.svg)
+<p align="center">
+  <img src="LSA PIPELINE.svg" alt="App Flow" width="600"/>
+</p>
 
 ## Component Details
 
