@@ -89,3 +89,68 @@ def SentimentAnalysis(text):
     sentiment_score = sentiment_analyzer.polarity_scores(cleaned_text)
     return sentiment_score
 
+# Streamlit UI
+st.title("Text Summarization and Analysis ")
+
+# File upload or text input
+uploaded_file = st.file_uploader("Upload a text file", type=["txt"])
+text_input = st.text_area("Or enter text directly:")
+
+if uploaded_file is not None:
+    text = uploaded_file.read().decode("utf-8")
+elif text_input:
+    text = text_input
+else:
+    st.warning("Please upload a file or enter text.")
+    st.stop()
+
+# Sidebar for controls
+st.sidebar.header("Options")
+
+
+# Number of lines for summary
+num_lines = st.sidebar.number_input("Number of lines for summary:", min_value=1, max_value=20, value=3)
+
+
+# Buttons in the sidebar
+if st.sidebar.button("Summarize"):
+    summary = summarize_text(text, num_lines)
+    st.subheader("Summary:")
+    st.write(summary)
+
+
+if st.sidebar.button("Generate Word Cloud"):
+    wordcloud = generate_wordcloud(text)
+    st.subheader("Word Cloud:")
+    plt.figure(figsize=(10, 5))
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.axis('off')
+    st.pyplot(plt)
+
+
+if st.sidebar.button("Show Word Frequency Graph"):
+    st.subheader("Word Frequency Graph:")
+    plot_word_frequency(text)
+
+
+if st.sidebar.button("Analyze Sentiment"):
+    sentiment_score = SentimentAnalysis(text)
+    st.subheader("Sentiment Analysis:")
+    st.write("Sentiment Score:", sentiment_score)
+
+    a=sentiment_score['pos']
+    b=sentiment_score['neg']
+    c=sentiment_score['neu']
+
+    if(a>b and c<0.75):
+        st.write("The text is Positive")
+    elif(b>a and c<0.75):
+        st.write("The text is Negative")
+    else:
+        st.write("The text is Neutral")  
+    
+    st.write("Compound Score:", sentiment_score['compound'])
+
+    #st.write("Positive:", sentiment_score['pos'])
+    #st.write("Negative:", sentiment_score['neg'])
+    #st.write("Neutral:", sentiment_score['neu'])
